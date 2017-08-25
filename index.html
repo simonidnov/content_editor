@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/content_editor.css">
+        <script src="node_modules/underscore/underscore-min.js"></script>
+        <script src="node_modules/zepto/dist/zepto.min.js"></script>
+        <script src="js/zepto_sortable.js"></script>
+        <script src="js/content_editor.js"></script>
+    </head>
+    <body>
+        <div class="content_editor" id="my_editor">
+            <div class="tool_bar">
+                <ul class="content_tools">
+                    <li class="open_close"></li>
+                    <li class="create_template" data-template="title_template" id="add_title"><img src="images/assets/title.svg"/></li>
+                    <li class="create_template" data-template="text_template" id="add_text"><img src="images/assets/text.svg"/></li>
+                    <li class="create_template" data-template="picture_template" id="add_picture"><img src="images/assets/picture.svg"/></li>
+                    <li class="create_template" data-template="embed_template" id="add_embed"><img src="images/assets/embed.svg"/></li>
+                    <li class="create_template" data-template="list_template" id="add_list"><img src="images/assets/list.svg"/></li>
+                </ul>
+            </div>
+            <section id="content_editor">
+                
+            </section>
+        </div>
+        <script>
+            var editor = null;
+            $(document).ready(function(){
+                "use strict";
+                editor = new content_editor($('#my_editor'), $('#content_editor'), "/api/contest/draft");
+                editor.init();
+            });
+        </script>
+        <script type="text/template" id="title_template">
+            <div class="component">
+                <input type="text" class="title_input" placeholder="entrez un titre"/>
+            </div>
+        </script>
+        <script type="text/template" id="text_template">
+            <div class="component">
+                <textarea class="text_input" placeholder="entrez un texte"></textarea>
+            </div>
+        </script>
+        <script type="text/template" id="picture_template">
+            <div class="component picture_input" placeholder="ajoutez une image"></div>
+        </script>
+        <script type="text/template" id="embed_template">
+            <div class="component embed_temp">
+                <input type="text_input" placeholder="ajoutez du contenu html, twitter, youtube ..."></input>
+                <iframe class="embed_content"></iframe>
+            </div>
+        </script>
+        
+        <script type="text/template" id="option_template">
+            <ul class="option_component">
+                <li>option</li>
+                <li>option 2</li>
+            </ul>
+        </script>
+        <script type="text/template" id="list_template">
+            <ul class="component list_content">
+                <li><input type="text" class="list_input"/><button class="delete_line"><img src="images/assets/cross.svg"/></button></li>
+            </ul>
+        </script>
+        <script type="text/template" id="editoaster_template">
+            <div class="editor_toastr">
+                <div class="message"><%= message %></div>
+                <% if(typeof action !== "undefined"){ %>
+                    <% for(var i=0; i<action.length; i++){ %>
+                        <div class="cta" data-choice="<%= i %>"><%= action[i].cta.label %></div> 
+                    <% } %>
+                <% } %>
+            </div>
+        </script>
+        
+    </body>
+</html>
